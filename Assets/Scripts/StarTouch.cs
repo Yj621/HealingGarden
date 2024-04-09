@@ -6,6 +6,12 @@ public class StarTouch : MonoBehaviour
 {
     // StarPoint를 저장할 정적 변수 선언
     public static int StarPoint = 0;
+    DataManager dataManager;
+
+    void Start()
+    {
+        dataManager = FindAnyObjectByType<DataManager>();
+    }
 
     void Update()
     {
@@ -32,6 +38,7 @@ public class StarTouch : MonoBehaviour
                         
                         // StarPoint 값을 1 증가
                         StarPoint++;
+                        dataManager.GetStarCandy();
 
                         // StarPoint의 현재 값을 콘솔에 출력
                         Debug.Log("StarPoint: " + StarPoint);

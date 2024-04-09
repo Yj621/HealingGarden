@@ -29,14 +29,6 @@ public class DataManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            for (int i = 0; i < 26; i++)
-            {
-                StarCandy[i] += C_getMoney[i];
-            }
-
-        }
         Theorem();
         S_ToString();
         C_ToString();
@@ -207,6 +199,14 @@ public class DataManager : MonoBehaviour
                     }
                 }
             }
+        }
+    }
+
+    public void GetStarCandy()
+    {
+        for (int i = 0; i < 26; i++)
+        {
+            StarCandy[i] += C_getMoney[i];
         }
     }
 

@@ -10,7 +10,7 @@ public class StarDrop : MonoBehaviour
 
     void Start()
     {
-        timer = Random.Range(1f, 5f); // 초기 타이머를 랜덤하게 설정 (1~5초)
+        timer = Random.Range(1f, 10f); // 초기 타이머를 랜덤하게 설정 (1~5초)
     }
 
     void Update()
@@ -20,7 +20,7 @@ public class StarDrop : MonoBehaviour
         if (timer <= 0)
         {
             SpawnStar(); // Star 생성 함수 호출
-            timer = Random.Range(1f, 5f);  // 타이머를 다시 랜덤하게 설정
+            timer = Random.Range(1f, 10f);  // 타이머를 다시 랜덤하게 설정
         }
     }
 
