@@ -7,20 +7,20 @@ using System;
 public class DataManager : MonoBehaviour
 {
     // 총 재화의 지갑 역할
-    public int[] StarCandy;
     public int[] Star;
+    public int[] StarCandy;
 
     // 현재 나의 재화의 상태
-    public int C_index;
     public int S_index;
+    public int C_index;
 
     // 클릭당 돈은 얼마나 얻을 것인지
-    public int[] C_getMoney;
     public int[] S_getMoney;
+    public int[] C_getMoney;
 
     // 출력하는 오브젝트를 받는 변수
-    public Text C_Text;
     public Text S_Text;
+    public Text C_Text;
     // Start is called before the first frame update
     void Start()
     {
@@ -206,7 +206,7 @@ public class DataManager : MonoBehaviour
     {
         for (int i = 0; i < 26; i++)
         {
-            StarCandy[i] += C_getMoney[i];
+            Star[i] += S_getMoney[i];
         }
     }
 
