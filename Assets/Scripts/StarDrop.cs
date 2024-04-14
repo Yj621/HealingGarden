@@ -22,6 +22,7 @@ public class StarDrop : MonoBehaviour
             SpawnStar(); // Star 생성 함수 호출
             timer = Random.Range(1f, 10f);  // 타이머를 다시 랜덤하게 설정
         }
+
     }
 
     void SpawnStar()

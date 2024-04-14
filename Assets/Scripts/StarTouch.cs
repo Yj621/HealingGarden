@@ -4,48 +4,53 @@ using UnityEngine;
 
 public class StarTouch : MonoBehaviour
 {
-    // StarPoint를 저장할 정적 변수 선언
     public static int StarPoint = 0;
     DataManager dataManager;
+    private float touchCooldown = 0.2f; // 터치 입력을 무시할 시간 (초)
+    private float lastTouchTime = -1f; // 마지막 터치 시간 저장 변수
 
     void Start()
     {
-        dataManager = FindAnyObjectByType<DataManager>();
+        dataManager = FindObjectOfType<DataManager>();
     }
 
     void Update()
     {
-        // 모바일 환경에서 터치 입력을 감지
-        if (Input.touchCount > 0)
+        if (Time.time > lastTouchTime + touchCooldown)
         {
-            Touch touch = Input.GetTouch(0);
-
-            // 첫 번째 터치가 화면에 처음 닿는 순간에만 실행
-            if (touch.phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                // 카메라로부터 터치 위치로 Ray를 발사
-                Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                RaycastHit hit;
-
-                // Ray에 오브젝트가 맞았는지 확인
-                if (Physics.Raycast(ray, out hit))
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
                 {
-                    // 맞은 오브젝트의 태그가 'Star'인지 확인
-                    if (hit.collider.gameObject.tag == "Star")
-                    {
-                        // 'Star' 오브젝트를 비활성화
-                        Destroy(hit.collider.gameObject);
-                        
-                        // StarPoint 값을 1 증가
-                        StarPoint++;
-                        dataManager.GetStarCandy();
+                    Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                    RaycastHit[] hits = Physics.RaycastAll(ray);
 
-                        // StarPoint의 현재 값을 콘솔에 출력
-                        Debug.Log("StarPoint: " + StarPoint);
+                    bool touchedStar = false;
+
+                    foreach (RaycastHit hit in hits)
+                    {
+                        GameObject hitObj = hit.collider.gameObject;
+                        if (hitObj.tag == "Star")
+                        {
+                            hitObj.SetActive(false); // Star(Clone) 비활성화
+                            DestroyManager.Instance.DestroyGameObject(hitObj); // 즉시 파괴 요청
+
+                            StarPoint++;
+                            dataManager.GetStarCandy();
+                            Debug.Log("StarPoint: " + StarPoint);
+
+                            touchedStar = true;
+                        }
+                    }
+
+
+                    if (touchedStar)
+                    {
+                        lastTouchTime = Time.time;
                     }
                 }
             }
         }
     }
 }
-
