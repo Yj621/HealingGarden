@@ -21,11 +21,19 @@ public class DataManager : MonoBehaviour
     // 출력하는 오브젝트를 받는 변수
     public Text S_Text;
     public Text C_Text;
+
+    // 추가: 현재 재화 단위를 가져오는 메서드
+    public char GetCurrencyUnit()
+    {
+        // 자료형에서 65부터 A를 표현하기 때문에 쓰는 코드 
+        return (char)(65 + S_index);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -33,6 +41,7 @@ public class DataManager : MonoBehaviour
         S_ToString();
         C_ToString();
     }
+
     void Theorem()
     {
         // 내 자산의 현재 상태값을 알 수 있도록 하는 코드
@@ -97,6 +106,7 @@ public class DataManager : MonoBehaviour
             }
         }
     }
+
     string C_ToString()
     {
         // 배열에 있는 값을 플레이어가 볼 수 있는 재화의 형태로 표현
@@ -119,7 +129,6 @@ public class DataManager : MonoBehaviour
         C_Text.text = p;
 
         return p;
-
     }
 
     string S_ToString()
@@ -144,11 +153,10 @@ public class DataManager : MonoBehaviour
         S_Text.text = p;
 
         return p;
-
     }
 
-    //사용 방법 Resource("변환할 재화의 string", 변환할 재화의 단위, 변환할 재화 값)
-    public void Resource(string currencyType, int index, int amount)
+    //사용 방법 Resource("변환할 재화의 string",  변환할 재화 값, 변환할 재화의 단위)
+    public void Resource(string currencyType, int amount, int index)
     {
         if (currencyType == "StarCandy")
         {
@@ -201,6 +209,7 @@ public class DataManager : MonoBehaviour
             }
         }
     }
+    
 
     public void GetStarCandy()
     {
@@ -209,5 +218,4 @@ public class DataManager : MonoBehaviour
             Star[i] += S_getMoney[i];
         }
     }
-
 }
