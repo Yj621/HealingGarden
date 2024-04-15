@@ -9,15 +9,31 @@ public class StarController : MonoBehaviour
         // Star의 현재 위치를 체크
         if (transform.position.y <= 0f)
         {
-            // 위치 고정
-            transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+            Test();
+        }
 
-            // Rigidbody를 kinematic으로 설정하여 더 이상 물리 엔진에 의해 움직이지 않도록 함
-            Rigidbody rb = GetComponent<Rigidbody>();
-            if (rb != null)
-            {
-                rb.isKinematic = true; // 물리 연산을 비활성화하여 추가적인 물리적 영향을 받지 않도록 설정
-            }
+
+
+
+
+
+
+
+
+
+
+
+    }
+    void Test()
+    {
+        // 위치 고정
+        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+
+        // Rigidbody를 kinematic으로 설정하여 더 이상 물리 엔진에 의해 움직이지 않도록 함
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true; // 물리 연산을 비활성화하여 추가적인 물리적 영향을 받지 않도록 설정
         }
     }
 }

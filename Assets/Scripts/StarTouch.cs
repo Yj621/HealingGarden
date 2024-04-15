@@ -43,8 +43,6 @@ public class StarTouch : MonoBehaviour
                             touchedStar = true;
                         }
                     }
-
-
                     if (touchedStar)
                     {
                         lastTouchTime = Time.time;
