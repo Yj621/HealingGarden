@@ -8,6 +8,8 @@ public class UIController : MonoBehaviour
     DataManager dataManager;
 
     [Header("변환 패널")]
+    public GameObject ConvertUI;
+    public GameObject HomeUI;
     public Slider convertSlider;
     public Text s_Text; // 변환된 값이 표시될 텍스트
     public Text c_Text; // 변환된 값이 표시될 텍스트
@@ -93,5 +95,12 @@ public class UIController : MonoBehaviour
         c_Text.text = convertedValue.ToString() + (char)currentIndex; // 변환된 StarCandy 값을 텍스트로 표시
     }
 
-
+    public void ActiveConverUI()
+    {
+        ConvertUI.SetActive(true);
+    }
+    public void ActiveHomeUI()
+    {
+        HomeUI.SetActive(true);
+    }
 }
