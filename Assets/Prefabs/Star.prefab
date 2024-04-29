@@ -13,8 +13,7 @@ GameObject:
   - component: {fileID: 6191537644000076167}
   - component: {fileID: 5581451276914949264}
   - component: {fileID: 6944618765448278315}
-  - component: {fileID: 5630519758934312789}
-  - component: {fileID: 7403230361896501222}
+  - component: {fileID: 2525198563684648607}
   m_Layer: 0
   m_Name: Star
   m_TagString: Star
@@ -135,7 +134,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5630519758934312789
+--- !u!114 &2525198563684648607
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -144,18 +143,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2028606216971687682}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c25a3858a7d7f408485fbc69417fc215, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7403230361896501222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2028606216971687682}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49cc53de76732104aa4ecbcc3f2fffcd, type: 3}
+  m_Script: {fileID: 11500000, guid: f3f90fd395b6b4c748697b889a040ac9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

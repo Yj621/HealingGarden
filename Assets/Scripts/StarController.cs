@@ -4,38 +4,113 @@ using UnityEngine;
 
 public class StarController : MonoBehaviour
 {
+    public static int StarPoint = 0;
+    DataManager dataManager;
+    private float touchCooldown = 0.2f; // í„°ì¹˜ ì…ë ¥ì„ ë¬´ì‹œí•  ì‹œê°„ (ì´ˆ)
+    private float lastTouchTime = -1f; // ë§ˆì§€ë§‰ í„°ì¹˜ ì‹œê°„ ì €ì¥ ë³€ìˆ˜
+
+    public GameObject starPrefab;
+    
+    private float timer;
+
+    void Start()
+    {
+        timer = Random.Range(1f, 10f); // ì´ˆê¸° íƒ€ì´ë¨¸ë¥¼ ëœë¤í•˜ê²Œ ì„¤ì • (1~5ì´ˆ)
+
+        dataManager = FindObjectOfType<DataManager>();
+    }
+
     void Update()
     {
-        // StarÀÇ ÇöÀç À§Ä¡¸¦ Ã¼Å©
+
+        timer -= Time.deltaTime; // íƒ€ì´ë¨¸ ê°ì†Œ
+
+        if (timer <= 0)
+        {
+            SpawnStar(); // Star ìƒì„± í•¨ìˆ˜ í˜¸ì¶œ
+            timer = Random.Range(1f, 10f);  // íƒ€ì´ë¨¸ë¥¼ ë‹¤ì‹œ ëœë¤í•˜ê²Œ ì„¤ì •
+        }
+
+        // Starì˜ í˜„ì¬ ìœ„ì¹˜ë¥¼ ì²´í¬
         if (transform.position.y <= 0f)
         {
             Test();
         }
-
-
-
-
-
-
-
-
-
-
-
+        TouchDestroy();
 
     }
     void Test()
     {
-        // À§Ä¡ °íÁ¤
+        // ìœ„ì¹˜ ê³ ì •
         transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
 
-        // Rigidbody¸¦ kinematicÀ¸·Î ¼³Á¤ÇÏ¿© ´õ ÀÌ»ó ¹°¸® ¿£Áø¿¡ ÀÇÇØ ¿òÁ÷ÀÌÁö ¾Êµµ·Ï ÇÔ
+        // Rigidbodyë¥¼ kinematicìœ¼ë¡œ ì„¤ì •í•˜ì—¬ ë” ì´ìƒ ë¬¼ë¦¬ ì—”ì§„ì— ì˜í•´ ì›€ì§ì´ì§€ ì•Šë„ë¡ í•¨
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.isKinematic = true; // ¹°¸® ¿¬»êÀ» ºñÈ°¼ºÈ­ÇÏ¿© Ãß°¡ÀûÀÎ ¹°¸®Àû ¿µÇâÀ» ¹ŞÁö ¾Êµµ·Ï ¼³Á¤
+            rb.isKinematic = true; // ë¬¼ë¦¬ ì—°ì‚°ì„ ë¹„í™œì„±í™”í•˜ì—¬ ì¶”ê°€ì ì¸ ë¬¼ë¦¬ì  ì˜í–¥ì„ ë°›ì§€ ì•Šë„ë¡ ì„¤ì •
         }
     }
+
+    void TouchDestroy()
+    {
+        if (Time.time > lastTouchTime + touchCooldown)
+        {
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                    RaycastHit[] hits = Physics.RaycastAll(ray);
+
+                    bool touchedStar = false;
+
+                    foreach (RaycastHit hit in hits)
+                    {
+                        GameObject hitObj = hit.collider.gameObject;
+                        if (hitObj.tag == "Star")
+                        {
+                            hitObj.SetActive(false); // Star(Clone) ë¹„í™œì„±í™”
+                            DestroyGameObject(hitObj); // ì¦‰ì‹œ íŒŒê´´ ìš”ì²­
+
+                            StarPoint++;
+                            dataManager.GetStarCandy();
+                            Debug.Log("StarPoint: " + StarPoint);
+
+                            touchedStar = true;
+                        }
+                    }
+                    if (touchedStar)
+                    {
+                        lastTouchTime = Time.time;
+                    }
+                }
+            }
+        }
+    }
+
+     void SpawnStar()
+    {
+        // Cube ìœ„ì¹˜ì—ì„œ ì¡°ê¸ˆ ìœ„ì˜ ìœ„ì¹˜ì—ì„œ Star ì¸ìŠ¤í„´ìŠ¤ë¥¼ ìƒì„±
+        Vector3 spawnPosition = transform.position + new Vector3(0, 1f, 0); // Yì¶• ë°©í–¥ìœ¼ë¡œ 1ë§Œí¼ ì˜¬ë¦° ìœ„ì¹˜
+        GameObject spawnedStar = Instantiate(starPrefab, spawnPosition, Quaternion.identity);
+        
+        Rigidbody rb = spawnedStar.GetComponent<Rigidbody>();
+        if(rb != null)
+        {
+            rb.velocity = new Vector3(0, 5f, 0); // Yì¶• ë°©í–¥ìœ¼ë¡œì˜ ì´ˆê¸° ì†ë„ ì„¤ì •
+        }
+    }
+
+    public void DestroyGameObject(GameObject obj)   // ë³„ ë¶€ìˆ´ë²„ë¦¬ê¸°
+    {
+        if (obj != null)
+        {
+            Destroy(obj);
+        }
+    }
+    
 }
-// ÀÌ ÄÚµå¸¦ ½ÇÇàÇÏ¸é »ı¼ºµÈ Star°¡ Æ¯Á¤ yÁÂÇ¥ (0f)¿¡¼­ ¸ØÃç¹ö¸®±â ¶§¹®¿¡ Collider¿¡¼­
-// isTrigger¸¦ OnÀ¸·Î ÇØ³öµµ ¶¥¹Ù´ÚÀ¸·Î ¶Õ°í ¶³¾îÁöÁöµµ ¾Ê°í, º°µé³¢¸® °ãÃÄ¼­ ¸· ÀÌ¸®Àú¸® ¿òÁ÷ÀÌÁöµµ ¾ÊÀ½
+// ì´ ì½”ë“œë¥¼ ì‹¤í–‰í•˜ë©´ ìƒì„±ëœ Starê°€ íŠ¹ì • yì¢Œí‘œ (0f)ì—ì„œ ë©ˆì¶°ë²„ë¦¬ê¸° ë•Œë¬¸ì— Colliderì—ì„œ
+// isTriggerë¥¼ Onìœ¼ë¡œ í•´ë†”ë„ ë•…ë°”ë‹¥ìœ¼ë¡œ ëš«ê³  ë–¨ì–´ì§€ì§€ë„ ì•Šê³ , ë³„ë“¤ë¼ë¦¬ ê²¹ì³ì„œ ë§‰ ì´ë¦¬ì €ë¦¬ ì›€ì§ì´ì§€ë„ ì•ŠìŒ
