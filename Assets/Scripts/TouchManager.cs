@@ -11,8 +11,8 @@ public class TouchManager : MonoBehaviour
 
     //이동 속도
     private float moveSpeed = 0.001f;
-    
-    void Start ()
+
+    void Start()
     {
         uIController = FindAnyObjectByType<UIController>();
     }
@@ -29,19 +29,28 @@ public class TouchManager : MonoBehaviour
                 case TouchPhase.Began:
                     RaycastHit hit;
                     Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                    
+
                     // Frying pan 오브젝트를 터치했는지 여부 확인
                     if (Physics.Raycast(ray, out hit))
                     {
-                        if (hit.collider.gameObject.name == "FryingPan")
+                        if (Physics.Raycast(ray, out hit))
                         {
-                            uIController.ActiveConverUI();
-                            Debug.Log("ConvertUI");
-                        }
-                        if (hit.collider.gameObject.name == "Home")
-                        {
-                            uIController.ActiveHomeUI();
-                            Debug.Log("HomeUI");
+                            string objectName = hit.collider.gameObject.name;
+                            switch (objectName)
+                            {
+                                case "FryingPan":
+                                    uIController.ActiveConverUI();
+                                    Debug.Log("ConvertUI");
+                                    break;
+                                case "Home":
+                                    uIController.ActiveHomeUI();
+                                    Debug.Log("HomeUI");
+                                    break;
+                                case "Pool":
+                                    uIController.ActivePoolUI();
+                                    Debug.Log("PoolUI");
+                                    break;
+                            }
                         }
                     }
                     break;

@@ -10,6 +10,7 @@ public class UIController : MonoBehaviour
     [Header("변환 패널")]
     public GameObject ConvertUI;
     public GameObject HomeUI;
+    public GameObject PoolUI;
     public Slider convertSlider;
     public Text s_Text; // 변환된 값이 표시될 텍스트
     public Text c_Text; // 변환된 값이 표시될 텍스트
@@ -98,9 +99,14 @@ public class UIController : MonoBehaviour
     public void ActiveConverUI()
     {
         ConvertUI.SetActive(true);
+        Debug.Log("1");
     }
     public void ActiveHomeUI()
     {
         HomeUI.SetActive(true);
+    }
+    public void ActivePoolUI()
+    {
+        PoolUI.SetActive(true);
     }
 }
