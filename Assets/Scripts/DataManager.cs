@@ -22,7 +22,7 @@ public class DataManager : MonoBehaviour
     public Text S_Text;
     public Text C_Text;
 
-    // 추가: 현재 재화 단위를 가져오는 메서드
+    //현재 재화 단위를 가져오는 메서드
     public char GetCurrencyUnit()
     {
         // 자료형에서 65부터 A를 표현하기 때문에 쓰는 코드 
