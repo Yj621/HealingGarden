@@ -60,8 +60,8 @@ public class UIController : MonoBehaviour
     public void OnBtnConvert()
     {
         // 변환하려는 양을 계산하여 현재 가지고 있는 재화와 단위에 맞게 설정
-        int convertedValue = Mathf.FloorToInt(convertSlider.value / 10); // Slider 값을 10으로 나눈 값
-        int convertedStar = convertedValue * 10; // 변환할 Star 재화
+        int convertedStar = Mathf.FloorToInt(convertSlider.value/10)*10; // Slider 값을 10으로 나눈 값
+        int convertedStarCandy = convertedStar /10 ; // 변환할 Star 재화
 
         // 충분한 Star 재화가 있는지 확인
         if (convertedStar > dataManager.Star[dataManager.S_index])
@@ -71,8 +71,8 @@ public class UIController : MonoBehaviour
         }
 
         // 충분한 재화가 있다면 변환 실행
-        dataManager.Resource("Star",  -convertedStar, dataManager.S_index); // Star 재화를 차감
-        dataManager.Resource("StarCandy", convertedValue, dataManager.C_index); // StarCandy 재화를 추가
+        dataManager.Resource("Star",  -convertedStar, currentIndex-64); // Star 재화를 차감
+        dataManager.Resource("StarCandy", convertedStarCandy, currentIndex-64); // StarCandy 재화를 추가
         UpdateConvertedValue(); // 변환된 값을 업데이트
     }
 
