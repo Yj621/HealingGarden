@@ -74,18 +74,18 @@ public class Button : MonoBehaviour
     // 구매할 자원이 충분한지 확인
     private bool CanBuy()
     {
-        // 플레이어가 구매에 필요한 자원을 충분히 가지고 있는지 확인하는 로직
-        // 예시: 구매 비용에 대한 로직을 여기에 구현
-        int requiredAmount = 100; // 예시: 구매 비용
-        return dataManager.Star[dataManager.S_index] >= requiredAmount;
+        Debug.Log("dd"); 
+        return true;
     }
 
     // 업그레이드할 자원이 충분한지 확인
     private bool CanUpgrade()
     {
-        // 플레이어가 업그레이드에 필요한 자원을 충분히 가지고 있는지 확인하는 로직
-        // 예시: 업그레이드 비용에 대한 로직을 여기에 구현
-        int requiredAmount = 200; // 예시: 업그레이드 비용
-        return dataManager.StarCandy[dataManager.C_index] >= requiredAmount;
+        
+        return true;
+        // // 플레이어가 업그레이드에 필요한 자원을 충분히 가지고 있는지 확인하는 로직
+        // // 예시: 업그레이드 비용에 대한 로직을 여기에 구현
+        // int requiredAmount = 200; // 예시: 업그레이드 비용
+        // return dataManager.StarCandy[dataManager.C_index] >= requiredAmount;
     }
 }

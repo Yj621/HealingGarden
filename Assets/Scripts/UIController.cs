@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    DataManager dataManager;
+    public bool isPanelOn = false;
+    DataManager dataManager;   
+    public GameObject BlockingPanel;
 
     [Header("변환 패널")]
     public GameObject ConvertUI;
@@ -15,8 +17,6 @@ public class UIController : MonoBehaviour
     public Text s_Text; // 변환된 값이 표시될 텍스트
     public Text c_Text; // 변환된 값이 표시될 텍스트
 
-    private char currencyUnit;
-    private int currentIndex = 65;
 
     void Start()
     {
@@ -30,29 +30,19 @@ public class UIController : MonoBehaviour
 
     void Update()
     {
-        currencyUnit = dataManager.GetCurrencyUnit(); // 재화 단위 가져오기
-        
+        UpdateConvertedValue();
     }
 
     // plus 버튼 클릭 시 재화 단위를 증가시키고 변환된 값 업데이트
     public void OnBtnPlus()
     {       
-        // 현재 재화 단위 인덱스가 최대 인덱스보다 작을 때만 증가시킴
-        if (currentIndex-65 < dataManager.S_index)
-        {
-            currentIndex++;
-        }
         UpdateConvertedValue(); // 변환된 값을 업데이트
     }
         
     // minus 버튼 클릭 시 재화 단위를 감소시키고 변환된 값 업데이트
     public void OnBtnMinus()
     {
-        // 현재 재화 단위 인덱스가 최소 인덱스보다 클 때만 감소시킴 (최소 단위 A를 넘어가지 않도록)
-        if (dataManager.S_index > 0 && currentIndex > 65)
-        {
-            currentIndex--;
-        }
+       
         UpdateConvertedValue(); // 변환된 값을 업데이트
     }
 
@@ -60,53 +50,70 @@ public class UIController : MonoBehaviour
     public void OnBtnConvert()
     {
         // 변환하려는 양을 계산하여 현재 가지고 있는 재화와 단위에 맞게 설정
-        int convertedStar = Mathf.FloorToInt(convertSlider.value/10)*10; // Slider 값을 10으로 나눈 값
-        int convertedStarCandy = convertedStar /10 ; // 변환할 Star 재화
+        int convertedStarCandy = Mathf.FloorToInt(convertSlider.value)*10;
+        int convertedStar = convertedStarCandy /10 ; // 변환할 Star 재화
+
 
         // 충분한 Star 재화가 있는지 확인
-        if (convertedStar > dataManager.Star[dataManager.S_index])
+        if (dataManager.StarCandy >= convertedStarCandy)
         {
-            Debug.Log("Star 재화가 부족합니다.");
-            return; // Star 재화가 부족하면 변환을 진행하지 않음
-        }
+            Debug.Log("convertedStarCandy: "+convertedStarCandy);
 
-        // 충분한 재화가 있다면 변환 실행
-        dataManager.Resource("Star",  -convertedStar, currentIndex-64); // Star 재화를 차감
-        dataManager.Resource("StarCandy", convertedStarCandy, currentIndex-64); // StarCandy 재화를 추가
-        UpdateConvertedValue(); // 변환된 값을 업데이트
+            // 충분한 재화가 있다면 변환 실행
+            dataManager.Resource("StarCandy",  -convertedStarCandy); // StarCandy 재화를 차감
+            dataManager.Resource("Star", convertedStar); // Star 재화를 추가
+            UpdateConvertedValue(); // 변환된 값을 업데이트
+        }
+        else
+        {
+            Debug.Log("Candy 재화가 부족합니다.");
+            return; 
+        }
     }
 
 
     // Slider 값이 변경될 때 호출되는 이벤트 핸들러
     public void OnSliderValueChanged(float value)
     {
-        
         UpdateConvertedValue(); // 변환된 값을 업데이트
     }
 
     void UpdateConvertedValue()
     {
         // Slider의 최대값 설정
-        int maxConvertibleValue = Mathf.FloorToInt(dataManager.Star[currentIndex-65]);
-        convertSlider.maxValue = maxConvertibleValue;
-        // // 현재 가지고 있는 재화와 단위에 따라 최대값을 설정
+        int maxConvertibleValue = Mathf.FloorToInt(dataManager.StarCandy);
+        convertSlider.maxValue = maxConvertibleValue / 10;
 
-        int convertedValue = Mathf.FloorToInt(convertSlider.value / 10); // Slider 값을 10으로 나눈 값
-        s_Text.text = (convertedValue * 10).ToString() + (char)currentIndex; // 변환된 Star 값을 텍스트로 표시
-        c_Text.text = convertedValue.ToString() + (char)currentIndex; // 변환된 StarCandy 값을 텍스트로 표시
+        //현재 가지고 있는 재화와 단위에 따라 최대값을 설정
+        int convertedValue = Mathf.FloorToInt(convertSlider.value); // Slider 값을 10으로 나눈 값
+        s_Text.text = (convertedValue * 10).ToString(); // 변환된 Star 값을 텍스트로 표시
+        c_Text.text = convertedValue.ToString(); // 변환된 StarCandy 값을 텍스트로 표시
     }
 
     public void ActiveConverUI()
     {
         ConvertUI.SetActive(true);
-        Debug.Log("1");
+        BlockingPanelOn();
     }
     public void ActiveHomeUI()
     {
         HomeUI.SetActive(true);
+        BlockingPanelOn();
     }
     public void ActivePoolUI()
     {
         PoolUI.SetActive(true);
+        BlockingPanelOn();
+    }
+
+    public void BlockingPanelOn()
+    {
+        BlockingPanel.SetActive(true);
+        isPanelOn = true;
+    }
+    public void BlockingPanelOff()
+    {
+        BlockingPanel.SetActive(false);
+        isPanelOn = false;
     }
 }
