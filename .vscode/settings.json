@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "Healing Garden.sln"
+    "dotnet.defaultSolution": "HealingGarden.sln"
 }
