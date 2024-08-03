@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TouchManager : MonoBehaviour
 {
+
     UIController uIController;
     //줌 속도 변수
     private float perspectiveZoomSpeed = 0.008f;

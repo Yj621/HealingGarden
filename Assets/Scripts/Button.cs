@@ -27,12 +27,16 @@ public class Button : MonoBehaviour
 
     // 데이터 관리자를 참조하는 변수
     public DataManager dataManager;
+
+    Timer timer;
+    
     // 필요 자원 양을 표시하는 UI 텍스트
     public Text amountText;
     public Text buttonLvText;
 
     void Start()
     {
+        timer = FindAnyObjectByType<Timer>();
         if (dataManager == null)
         {
             dataManager = FindObjectOfType<DataManager>();
@@ -105,6 +109,8 @@ public class Button : MonoBehaviour
                 return dataManager.StarCandy >= requiredAmount;
             case "변환 자동화":
                 return dataManager.StarCandy >= requiredAmount;
+            case "쿨타임 감소":
+                return dataManager.StarCandy >= requiredAmount;
             default:
                 return false; // 지원되지 않는 버튼 이름의 경우 false 반환
         }
@@ -122,11 +128,16 @@ public class Button : MonoBehaviour
             case "변환 자동화":
                 // 변환 자동화 추가 로직 구현
                 break;
+            case "쿨타임 감소":
+                timer.startNumber -= 0.1f;
+                break;
             default:
                 break;
         }
         dataManager.StarCandy -= requiredAmount; // 필요한 자원 차감
         requiredAmount += (buttonName == "별사탕 보너스") ? 100 : 50; // 필요 자원 증가
         buttonLvText.text = "Lv." + buttonLv;
+
+        Debug.Log("timer.startNumber : "+timer.startNumber);
     }
 }
