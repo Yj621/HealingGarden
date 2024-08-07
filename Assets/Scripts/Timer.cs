@@ -6,23 +6,27 @@ public class Timer : MonoBehaviour
 {
     public GameObject timerCam;
     public TextMesh countdownText;
-    public float startNumber = 10; // 카운트다운 시작 숫자
-    public float countdownInterval = 1.0f; // 카운트다운 간격 (초)
-
+    public float countdownTimer = 10f; // 카운트다운 시작 숫자
 
     Vector3 startScale;
-    public float distance = 10; //카메라와 text의 거리
+    public float distance = 10f; // 카메라와 텍스트의 거리
+    private bool isTimerRunning = false; // 타이머 실행 여부
 
     void Start()
     {
-        startScale = transform.localScale; 
-
-        
+        startScale = transform.localScale;
     }
-    
+
     public void OnClick()
     {
-        StartCoroutine(CountdownRoutine()); // 카운트다운 코루틴 시작(이 코드를 마쿠가 온천에 들어오면 코드 옮기기)
+        // 버튼 클릭 시 타이머 시작
+        isTimerRunning = true;
+    }
+
+    public void TextUpdate()
+    {
+        // 소수점 둘째 자리까지 표시
+        countdownText.text = countdownTimer.ToString("F2");
     }
 
     void Update()
@@ -32,25 +36,17 @@ public class Timer : MonoBehaviour
         transform.localScale = newScale;
 
         transform.rotation = timerCam.transform.rotation;
-    }
 
-    private IEnumerator CountdownRoutine()
-    {
-        float currentNumber = startNumber;
-        
-        while (currentNumber >= 0)
+        // 타이머가 실행 중일 때만 카운트다운
+        if (isTimerRunning && countdownTimer > 0)
         {
-            countdownText.text = currentNumber.ToString("F1"); // 현재 숫자를 텍스트로 표시
-            yield return new WaitForSeconds(countdownInterval); // 지정된 시간만큼 대기
-            currentNumber--; // 숫자 감소
+            // Time.deltaTime은 프레임 간의 시간 차이를 초 단위로 나타내므로 1/1000초 단위로 감소
+            countdownTimer -= Time.deltaTime;
+            // 시작 숫자를 0보다 작게 만들지 않기 위한 조정
+            if (countdownTimer < 0)
+                countdownTimer = 0;
         }
 
-        OnCountdownFinished(); // 카운트다운이 끝났을 때 실행할 메서드 호출
-    }
-
-    private void OnCountdownFinished()
-    {
-        // 카운트다운이 끝났을 때 수행할 작업
-        Debug.Log("Countdown finished!");
+        TextUpdate();
     }
 }

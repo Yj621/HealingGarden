@@ -8,10 +8,10 @@ public class TouchManager : MonoBehaviour
     UIController uIController;
     //줌 속도 변수
     private float perspectiveZoomSpeed = 0.008f;
-    private float orthoZoomSpeed = 0.0001f;
+    private float orthoZoomSpeed = 0.001f;
 
     //이동 속도
-    private float moveSpeed = 0.001f;
+    private float moveSpeed = 0.01f;
 
     void Start()
     {

@@ -129,7 +129,8 @@ public class Button : MonoBehaviour
                 // 변환 자동화 추가 로직 구현
                 break;
             case "쿨타임 감소":
-                timer.startNumber -= 0.1f;
+                timer.countdownTimer -= 0.1f; //감소할 타이머
+                timer.TextUpdate();
                 break;
             default:
                 break;
@@ -138,6 +139,6 @@ public class Button : MonoBehaviour
         requiredAmount += (buttonName == "별사탕 보너스") ? 100 : 50; // 필요 자원 증가
         buttonLvText.text = "Lv." + buttonLv;
 
-        Debug.Log("timer.startNumber : "+timer.startNumber);
+        Debug.Log("timer.startNumber : "+timer.countdownTimer);
     }
 }
