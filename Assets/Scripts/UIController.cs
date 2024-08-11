@@ -42,7 +42,6 @@ public class UIController : MonoBehaviour
     // minus 버튼 클릭 시 재화 단위를 감소시키고 변환된 값 업데이트
     public void OnBtnMinus()
     {
-       
         UpdateConvertedValue(); // 변환된 값을 업데이트
     }
 
@@ -50,18 +49,16 @@ public class UIController : MonoBehaviour
     public void OnBtnConvert()
     {
         // 변환하려는 양을 계산하여 현재 가지고 있는 재화와 단위에 맞게 설정
-        int convertedStarCandy = Mathf.FloorToInt(convertSlider.value)*10;
-        int convertedStar = convertedStarCandy /10 ; // 변환할 Star 재화
+        int convertedStar = Mathf.FloorToInt(convertSlider.value)*10;
+        int convertedStarCandy = convertedStar /10 ; // 변환할 Star 재화
 
 
         // 충분한 Star 재화가 있는지 확인
-        if (dataManager.StarCandy >= convertedStarCandy)
+        if (dataManager.Star >= convertedStar)
         {
-            Debug.Log("convertedStarCandy: "+convertedStarCandy);
-
             // 충분한 재화가 있다면 변환 실행
-            dataManager.Resource("StarCandy",  -convertedStarCandy); // StarCandy 재화를 차감
-            dataManager.Resource("Star", convertedStar); // Star 재화를 추가
+            dataManager.Resource("Star",  -convertedStar); // Star 재화를 차감
+            dataManager.Resource("StarCandy", convertedStarCandy); // StarCandy 재화를 추가
             UpdateConvertedValue(); // 변환된 값을 업데이트
         }
         else
@@ -81,7 +78,7 @@ public class UIController : MonoBehaviour
     void UpdateConvertedValue()
     {
         // Slider의 최대값 설정
-        int maxConvertibleValue = Mathf.FloorToInt(dataManager.StarCandy);
+        int maxConvertibleValue = Mathf.FloorToInt(dataManager.Star);
         convertSlider.maxValue = maxConvertibleValue / 10;
 
         //현재 가지고 있는 재화와 단위에 따라 최대값을 설정

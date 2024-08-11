@@ -75,7 +75,7 @@ public class StarController : MonoBehaviour
                             DestroyGameObject(hitObj); // 즉시 파괴 요청
 
                             StarPoint++;
-                            dataManager.GetStarCandy();
+                            dataManager.GetStar();
                             Debug.Log("StarPoint: " + StarPoint);
 
                             touchedStar = true;

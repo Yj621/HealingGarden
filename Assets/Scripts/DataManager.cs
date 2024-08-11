@@ -53,9 +53,9 @@ public class DataManager : MonoBehaviour
     }
     
 
-    public void GetStarCandy()
+    public void GetStar()
     {
-        StarCandy += C_getMoney;
+        Star += S_getMoney;
         UpdateResource();
     }
 }
