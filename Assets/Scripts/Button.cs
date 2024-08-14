@@ -29,6 +29,7 @@ public class Button : MonoBehaviour
     public DataManager dataManager;
 
     Timer timer;
+    Happiness happiness;
     
     // 필요 자원 양을 표시하는 UI 텍스트
     public Text amountText;
@@ -37,6 +38,7 @@ public class Button : MonoBehaviour
     void Start()
     {
         timer = FindAnyObjectByType<Timer>();
+        happiness = FindAnyObjectByType<Happiness>();
         if (dataManager == null)
         {
             dataManager = FindObjectOfType<DataManager>();
@@ -111,6 +113,8 @@ public class Button : MonoBehaviour
                 return dataManager.StarCandy >= requiredAmount;
             case "쿨타임 감소":
                 return dataManager.StarCandy >= requiredAmount;
+            case "행복도 속도 증가":
+                return dataManager.StarCandy >= requiredAmount;
             default:
                 return false; // 지원되지 않는 버튼 이름의 경우 false 반환
         }
@@ -131,6 +135,9 @@ public class Button : MonoBehaviour
             case "쿨타임 감소":
                 timer.countdownTimer -= 0.1f; //감소할 타이머
                 timer.TextUpdate();
+                break;
+            case "행복도 속도 증가":
+                happiness.incressDuration -= 0.1f;
                 break;
             default:
                 break;
