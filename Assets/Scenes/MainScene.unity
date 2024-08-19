@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028353, g: 0.22571383, b: 0.30692253, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -5256,7 +5256,7 @@ GameObject:
   - component: {fileID: 811028871}
   m_Layer: 0
   m_Name: Warpzone-1
-  m_TagString: Untagged
+  m_TagString: WarpZone1
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10125,6 +10125,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   starPrefab: {fileID: 2958965358673996300, guid: 93248a14c79f7da49af83357d3fb0df3,
     type: 3}
+  EnterSpot: 0
 --- !u!54 &1603542756
 Rigidbody:
   m_ObjectHideFlags: 0

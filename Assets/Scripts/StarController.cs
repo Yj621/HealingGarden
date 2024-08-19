@@ -11,26 +11,26 @@ public class StarController : MonoBehaviour
 
     public GameObject starPrefab;
     
-    private float timer;
+    private float DuringSpawn;
+    private float timer = 0f;
+
+    public bool EnterSpot = false;
 
     void Start()
     {
-        timer = Random.Range(1f, 10f); // 초기 타이머를 랜덤하게 설정 (1~5초)
+        DuringSpawn = Random.Range(1f, 10f); // 초기 타이머를 랜덤하게 설정 (1~5초)
 
         dataManager = FindObjectOfType<DataManager>();
     }
 
     void Update()
     {
-
-        timer -= Time.deltaTime; // 타이머 감소
-
-        if (timer <= 0)
+        if (EnterSpot == true)
         {
-            SpawnStar(); // Star 생성 함수 호출
-            timer = Random.Range(1f, 10f);  // 타이머를 다시 랜덤하게 설정
+            SpawnStart();
         }
 
+        SpawnStart();
         // Star의 현재 위치를 체크
         if (transform.position.y <= 0f)
         {
@@ -90,8 +90,24 @@ public class StarController : MonoBehaviour
         }
     }
 
+    void SpawnStart()
+    {
+        if (timer >= 10f)   // 타이머가 10초가 되면 멈춘다.
+            return;
+
+        timer += Time.deltaTime;    // 타이머 가동
+        DuringSpawn -= Time.deltaTime; // 10초 스톱워치 감소
+
+        if (DuringSpawn <= 0)
+        {
+            SpawnStar(); // Star 생성 함수 호출
+            DuringSpawn = Random.Range(1f, 10f);  // 스톱워치를 다시 랜덤하게 설정
+        }
+    }
      void SpawnStar()
     {
+
+
         // Cube 위치에서 조금 위의 위치에서 Star 인스턴스를 생성
         Vector3 spawnPosition = transform.position + new Vector3(0, 1f, 0); // Y축 방향으로 1만큼 올린 위치
         GameObject spawnedStar = Instantiate(starPrefab, spawnPosition, Quaternion.identity);
