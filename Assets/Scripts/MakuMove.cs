@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using UnityEngine;
 
 public class MakuMove : MonoBehaviour
@@ -9,14 +10,27 @@ public class MakuMove : MonoBehaviour
     public float speed = 1f;
     private float startTime;
     private float journeyLength;
+    public GameObject makuSpot;
 
+    private bool isEnter = false;
     void Start()
     {
         journeyLength = Vector3.Distance(cube1.transform.position, cube2.transform.position);
         startTime = Time.time;
+        isEnter = false;
     }
 
     void Update()
+    {
+        MoveStart();
+        if (isEnter != false)
+        {
+            makuSpot.SetActive(true);
+            gameObject.SetActive(false);
+        }
+    }
+
+    void MoveStart ()
     {
         float distCovered = (Time.time - startTime) * speed;
         float fracJourney = Mathf.PingPong(distCovered, journeyLength) / journeyLength;
@@ -31,6 +45,15 @@ public class MakuMove : MonoBehaviour
             float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
             Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
             transform.rotation = targetRotation;
+        }
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("WarpZone1"))
+        {
+            isEnter = true;
+            Debug.Log("WarpZone에 진입했습니다!"); // 디버그 메시지 출력
         }
     }
 }

@@ -13,13 +13,23 @@ public class TouchManager : MonoBehaviour
     //이동 속도
     private float moveSpeed = 0.01f;
 
+    // 별조각 관련 변수
+    DataManager dataManager;    // 데이터매니저
+    public static int StarPoint = 0;    // 먹은 별조각
+    private float touchCooldown = 0.2f; // 터치 입력을 무시할 시간 (초)
+    private float lastTouchTime = -1f; // 마지막 터치 시간 저장 변수
+    public GameObject starPrefab;   // 부숴버릴 별조각 Prefab
+
     void Start()
     {
         uIController = FindAnyObjectByType<UIController>();
+        dataManager = FindObjectOfType<DataManager>();  // 데이터매니저 (별조각)
     }
 
     void Update()
     {
+        TouchDestroy(); // 별 부수기 함수 (항상 켜져있어야 언제든 별조각을 터치로 먹을 수 있음)
+
         if (uIController.isPanelOn==false)
         {
 
@@ -102,6 +112,51 @@ public class TouchManager : MonoBehaviour
                     GetComponent<Camera>().fieldOfView = Mathf.Clamp(GetComponent<Camera>().fieldOfView, 0.1f, 179.9f);
                 }
             }
+        }
+    }
+
+    void TouchDestroy() // 별 부수기 - 1
+    {
+        if (Time.time > lastTouchTime + touchCooldown)
+        {
+            if (Input.touchCount > 0)
+            {
+                Touch touch = Input.GetTouch(0);
+                if (touch.phase == TouchPhase.Began)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                    RaycastHit[] hits = Physics.RaycastAll(ray);
+
+                    bool touchedStar = false;
+
+                    foreach (RaycastHit hit in hits)
+                    {
+                        GameObject hitObj = hit.collider.gameObject;
+                        if (hitObj.tag == "Star")
+                        {
+                            hitObj.SetActive(false); // Star(Clone) 비활성화
+                            DestroyGameObject(hitObj); // 즉시 파괴 요청
+
+                            StarPoint++;
+                            dataManager.GetStar();
+                            Debug.Log("StarPoint: " + StarPoint);
+
+                            touchedStar = true;
+                        }
+                    }
+                    if (touchedStar)
+                    {
+                        lastTouchTime = Time.time;
+                    }
+                }
+            }
+        }
+    }
+    public void DestroyGameObject(GameObject obj)   // 별 부수기 - 2
+    {
+        if (obj != null)
+        {
+            Destroy(obj);
         }
     }
 }

@@ -1805,6 +1805,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c4326ad4bc2894f9b4f39e2469a33a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  starPrefab: {fileID: 2958965358673996300, guid: 93248a14c79f7da49af83357d3fb0df3,
+    type: 3}
 --- !u!1 &335026881
 GameObject:
   m_ObjectHideFlags: 0
@@ -2152,13 +2154,14 @@ GameObject:
   - component: {fileID: 348730271}
   - component: {fileID: 348730270}
   - component: {fileID: 348730269}
+  - component: {fileID: 348730273}
   m_Layer: 0
   m_Name: Spot1-1
-  m_TagString: Untagged
+  m_TagString: MakuSpot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &348730269
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2229,7 +2232,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348730268}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 3772797090071207700, guid: 8242d247159ec462794ba075ca8c938e, type: 3}
 --- !u!4 &348730272
 Transform:
   m_ObjectHideFlags: 0
@@ -2238,13 +2241,27 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348730268}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.16, y: -0.03, z: 8.79}
+  m_LocalRotation: {x: -0, y: 0.66389793, z: -0, w: 0.7478232}
+  m_LocalPosition: {x: -21.558, y: 0.683, z: 5.731}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 862312340}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 83.196, z: 0}
+--- !u!114 &348730273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348730268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49cc53de76732104aa4ecbcc3f2fffcd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  starPrefab: {fileID: 2958965358673996300, guid: 93248a14c79f7da49af83357d3fb0df3,
+    type: 3}
 --- !u!1 &357972254
 GameObject:
   m_ObjectHideFlags: 0
@@ -10000,7 +10017,6 @@ GameObject:
   - component: {fileID: 1603542751}
   - component: {fileID: 1603542750}
   - component: {fileID: 1603542754}
-  - component: {fileID: 1603542755}
   - component: {fileID: 1603542756}
   m_Layer: 0
   m_Name: Maku
@@ -10017,14 +10033,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1603542748}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.474, y: -0.149, z: 4.14}
+  m_LocalRotation: {x: -0, y: 0.010889287, z: -0, w: 0.99994075}
+  m_LocalPosition: {x: -1.5379839, y: -0.14899999, z: 4.1002507}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 309618527}
   m_Father: {fileID: 1015678483}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 1.248, z: 0}
 --- !u!65 &1603542750
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10111,21 +10127,7 @@ MonoBehaviour:
   cube1: {fileID: 1841124265}
   cube2: {fileID: 764178389}
   speed: 1
---- !u!114 &1603542755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1603542748}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49cc53de76732104aa4ecbcc3f2fffcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  starPrefab: {fileID: 2958965358673996300, guid: 93248a14c79f7da49af83357d3fb0df3,
-    type: 3}
-  EnterSpot: 0
+  makuSpot: {fileID: 348730268}
 --- !u!54 &1603542756
 Rigidbody:
   m_ObjectHideFlags: 0
