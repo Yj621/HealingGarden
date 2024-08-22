@@ -6,27 +6,25 @@ public class Timer : MonoBehaviour
 {
     public GameObject timerCam;
     public TextMesh countdownText;
-    public float countdownTimer = 10f; // 카운트다운 시작 숫자
+    public float countdownTimer = 300f; // 카운트다운 시작 숫자
 
     Vector3 startScale;
     public float distance = 10f; // 카메라와 텍스트의 거리
-    private bool isTimerRunning = false; // 타이머 실행 여부
+    public bool isTimerRunning = false; // 타이머 실행 여부
 
     void Start()
     {
         startScale = transform.localScale;
     }
 
-    public void OnClick()
-    {
-        // 버튼 클릭 시 타이머 시작
-        isTimerRunning = true;
-    }
 
     public void TextUpdate()
     {
+        // 타이머를 분:초 (MM:SS) 형식으로 변환
+        int minutes = Mathf.FloorToInt(countdownTimer / 60);
+        int seconds = Mathf.FloorToInt(countdownTimer % 60);
         // 소수점 둘째 자리까지 표시
-        countdownText.text = countdownTimer.ToString("F2");
+        countdownText.text = string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     void Update()
@@ -48,5 +46,13 @@ public class Timer : MonoBehaviour
         }
 
         TextUpdate();
+
+        //카운트가 끝난 후 행복도, 타이머 비활성화+마쿠 다시 움직이게
+        if(countdownTimer == 0)
+        {
+            Debug.Log("Count End");
+        }
+
+       
     }
 }

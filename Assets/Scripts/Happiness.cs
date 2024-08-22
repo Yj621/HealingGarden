@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,10 +8,10 @@ public class Happiness : MonoBehaviour
     public Slider happinessSlider;
 
     //  public float spotRadius = 1.0f;
-    public float incressDuration = 10f; //½½¶óÀÌ´õ°¡ ÃÖ´ëÄ¡±îÁö Áõ°¡ÇÏ´Âµ¥ °É¸®´Â ½Ã°£
+    public float incressDuration = 10f; //ìŠ¬ë¼ì´ë”ê°€ ìµœëŒ€ì¹˜ê¹Œì§€ ì¦ê°€í•˜ëŠ”ë° ê±¸ë¦¬ëŠ” ì‹œê°„
 
-    private bool isIncreasing = false; //½½¶óÀÌ´õ Áõ°¡ »óÅÂ
-    private float startTime; //½½¶óÀÌ´õ Áõ°¡°¡ ½ÃÀÛµÈ ½Ã°£
+    private bool isIncreasing = false; //ìŠ¬ë¼ì´ë” ì¦ê°€ ìƒíƒœ
+    private float startTime; //ìŠ¬ë¼ì´ë” ì¦ê°€ê°€ ì‹œì‘ëœ ì‹œê°„
 
     public bool happiness = false;
 
@@ -30,7 +30,7 @@ public class Happiness : MonoBehaviour
         if(isIncreasing)
         {
             float time = Time.time - startTime;
-            //Debug.Log("°æ°ú ½Ã°£: " + time + "ÃÊ");
+            //Debug.Log("ê²½ê³¼ ì‹œê°„: " + time + "ì´ˆ");
             if (time < incressDuration)
             {
                 

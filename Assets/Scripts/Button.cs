@@ -133,7 +133,7 @@ public class Button : MonoBehaviour
                 // 변환 자동화 추가 로직 구현
                 break;
             case "쿨타임 감소":
-                timer.countdownTimer -= 0.1f; //감소할 타이머
+                timer.countdownTimer -= 1f; //감소할 타이머
                 timer.TextUpdate();
                 break;
             case "행복도 속도 증가":

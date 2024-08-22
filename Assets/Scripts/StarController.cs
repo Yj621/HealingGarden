@@ -5,17 +5,21 @@ using UnityEngine;
 public class StarController : MonoBehaviour
 {
     private float DuringSpawn;
-    private float timer = 0f;
+    private float s_timer = 0f;
     private bool Escape_Spot = false;
     
     public GameObject starPrefab;
 
     public Happiness happiness;
+    public Timer timer;
     private bool stardrop;
     public GameObject HappinessBar;
+    public GameObject Timer;
 
     void Start()
     {
+        Timer.SetActive(false);
+        timer = FindAnyObjectByType<Timer>();
         Escape_Spot = false;
         DuringSpawn = Random.Range(1f, 10f); // 초기 타이머를 랜덤하게 설정 (1~5초)
         happiness.StarDropStop();
@@ -43,7 +47,7 @@ public class StarController : MonoBehaviour
         }
 
 
-        if (timer >= 300f)   // 타이머가 10초가 되면 멈춘다.
+        if (s_timer >= 300f)   // 타이머가 10초가 되면 멈춘다.
         {
             Escape_Spot = true;
         }
@@ -64,9 +68,11 @@ public class StarController : MonoBehaviour
 
     void SpawnStart()
     {
+        Timer.SetActive(true);
+        Debug.Log("Bar Activation");
+        timer.isTimerRunning = true;
         SpawnStar(); // Star 생성 함수 호출
         HappinessBar.SetActive(true);
-        Debug.Log("Bar Activation");
     }
      void SpawnStar()
     {
