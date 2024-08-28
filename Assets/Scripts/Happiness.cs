@@ -19,9 +19,13 @@ public class Happiness : MonoBehaviour
     public float Timer = 300f;
     private bool timerIsRunning = false;
 
+    Timer timer;
+
     void Start()
     {
+        timer = FindAnyObjectByType<Timer>();
         timerIsRunning = true;
+        timer.isTimerRunning = true;
         happinessSlider.value = 0;
         isIncreasing = true;
         startTime = Time.time;

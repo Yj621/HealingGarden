@@ -125,9 +125,10 @@ public class Button : MonoBehaviour
     {
         switch (buttonName)
         {
-            case "별사탕 보너스":
+            case "별조각 보너스":
                 dataManager.S_getMoney += 5; // 별사탕 보너스 행동 수행
                 buttonLv++;
+                Debug.Log("test");
                 break;
             case "변환 자동화":
                 // 변환 자동화 추가 로직 구현
@@ -145,7 +146,6 @@ public class Button : MonoBehaviour
         dataManager.StarCandy -= requiredAmount; // 필요한 자원 차감
         requiredAmount += (buttonName == "별조각 보너스") ? 100 : 50; // 필요 자원 증가
         buttonLvText.text = "Lv." + buttonLv;
-
-        Debug.Log("timer.startNumber : "+timer.countdownTimer);
+        
     }
 }

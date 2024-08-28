@@ -7,14 +7,10 @@ public class StarController : MonoBehaviour
     private float DuringSpawn;
     private float s_timer = 0f;
     private bool Escape_Spot = false;
-
-    public Timer timer;
-    public GameObject Timer;
+    
 
     void Start()
     {
-        Timer.SetActive(false);
-        timer = FindAnyObjectByType<Timer>();
         Escape_Spot = false;
     }
 
