@@ -2299,11 +2299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49cc53de76732104aa4ecbcc3f2fffcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  starPrefab: {fileID: 2958965358673996300, guid: 93248a14c79f7da49af83357d3fb0df3,
-    type: 3}
-  happiness: {fileID: 1967389150}
   timer: {fileID: 1258568072}
-  HappinessBar: {fileID: 1128272246}
   Timer: {fileID: 588318668}
 --- !u!1 &357972254
 GameObject:
@@ -7621,8 +7617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   happinessSlider: {fileID: 1128272248}
   incressDuration: 10
-  happiness: 0
-  resetHappiness: {fileID: 0}
+  starPrefab: {fileID: 0}
 --- !u!1 &1176490155
 GameObject:
   m_ObjectHideFlags: 0
@@ -13171,8 +13166,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   happinessSlider: {fileID: 1967389151}
   incressDuration: 10
-  happiness: 0
-  resetHappiness: {fileID: 348730273}
+  starPrefab: {fileID: 2958965358673996300, guid: 93248a14c79f7da49af83357d3fb0df3,
+    type: 3}
 --- !u!114 &1967389151
 MonoBehaviour:
   m_ObjectHideFlags: 0

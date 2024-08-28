@@ -13,20 +13,35 @@ public class Happiness : MonoBehaviour
     private bool isIncreasing = false; //슬라이더 증가 상태
     private float startTime; //슬라이더 증가가 시작된 시간
 
-    public bool happiness = false;
+    public GameObject starPrefab;
 
-    public StarController resetHappiness;
+    // 타이머
+    public float Timer = 300f;
+    private bool timerIsRunning = false;
 
     void Start()
     {
+        timerIsRunning = true;
         happinessSlider.value = 0;
         isIncreasing = true;
-        happiness = false;
         startTime = Time.time;
     }
 
     void Update()
     {
+        if (timerIsRunning) // 타이머
+        {
+            if (Timer > 0)
+            {
+                Timer -= Time.deltaTime;
+            }    
+            else
+            {
+                Timer = 0;
+                Debug.Log("Time is Done");
+            }
+        }
+
         if(isIncreasing)
         {
             float time = Time.time - startTime;
@@ -40,22 +55,30 @@ public class Happiness : MonoBehaviour
             {
                 happinessSlider.value = happinessSlider.maxValue;
                 isIncreasing = false;
-                StarDropTrigger();
+                SpawnStar();
                 Debug.Log("Star Drop!!!");
-                StarDropStop();
-                gameObject.SetActive(false);
+                reset();
             }
         }
     }
 
-    public bool StarDropTrigger()
+    void reset()
     {
-        happiness = true;
-        return happiness;
+        happinessSlider.value = 0;
+        isIncreasing = true;
+        startTime = Time.time;
     }
-    public bool StarDropStop()
+
+    void SpawnStar()
     {
-        happiness = false;
-        return happiness;
+        // Maku 위치에서 조금 위의 위치에서 Star 인스턴스를 생성
+        Vector3 spawnPosition = transform.position + new Vector3(0, 1f, 0); // Y축 방향으로 1만큼 올린 위치
+        GameObject spawnedStar = Instantiate(starPrefab, spawnPosition, Quaternion.identity);
+
+        Rigidbody rb = spawnedStar.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.velocity = new Vector3(0, 5f, 0); // Y축 방향으로의 초기 속도 설정
+        }
     }
 }
