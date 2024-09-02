@@ -33,6 +33,12 @@ public class Happiness : MonoBehaviour
 
     void Update()
     {
+
+        if (transform.position.y <= 0f)
+        {
+            Stand_Here();   // 땅에 떨어지지 않게 하는 것
+        }
+
         if (timerIsRunning) // 타이머
         {
             if (Timer > 0)
@@ -61,12 +67,12 @@ public class Happiness : MonoBehaviour
                 isIncreasing = false;
                 SpawnStar();
                 Debug.Log("Star Drop!!!");
-                reset();
+                Reset();
             }
         }
     }
 
-    void reset()
+    void Reset()
     {
         happinessSlider.value = 0;
         isIncreasing = true;
@@ -83,6 +89,19 @@ public class Happiness : MonoBehaviour
         if (rb != null)
         {
             rb.velocity = new Vector3(0, 5f, 0); // Y축 방향으로의 초기 속도 설정
+        }
+    }
+
+    void Stand_Here()
+    {
+        // 위치 고정
+        transform.position = new Vector3(transform.position.x, 0f, transform.position.z);
+
+        // Rigidbody를 kinematic으로 설정하여 더 이상 물리 엔진에 의해 움직이지 않도록 함
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = true; // 물리 연산을 비활성화하여 추가적인 물리적 영향을 받지 않도록 설정
         }
     }
 }
