@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class Timer : MonoBehaviour
 {
-    public GameObject timerCam;
+    public GameObject timerCam, Maku1, Maku2;
     public TextMesh countdownText;
     public float countdownTimer = 300f; // 카운트다운 시작 숫자
 
     Vector3 startScale;
     public float distance = 10f; // 카메라와 텍스트의 거리
     public bool isTimerRunning = false; // 타이머 실행 여부
-
+    
     void Start()
     {
         startScale = transform.localScale;
@@ -47,12 +47,11 @@ public class Timer : MonoBehaviour
 
         TextUpdate();
 
-        //카운트가 끝난 후 행복도, 타이머 비활성화+마쿠 다시 움직이게
-        if(countdownTimer == 0)
+        if (countdownTimer == 0)
         {
-            Debug.Log("Count End");
+            Debug.Log("Count End. Stopping Happiness script.");
+            Maku1.SetActive(false);
+            Maku2.SetActive(true);
         }
-
-       
     }
 }

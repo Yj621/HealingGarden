@@ -19,16 +19,22 @@ public class Happiness : MonoBehaviour
     public float Timer = 300f;
     private bool timerIsRunning = false;
 
+    //별 카운트
+    public int StarCount = 0;
+    public int HowManyStar = 1;
+
     Timer timer;
 
     void Start()
     {
+        
         timer = FindAnyObjectByType<Timer>();
         timerIsRunning = true;
         timer.isTimerRunning = true;
         happinessSlider.value = 0;
         isIncreasing = true;
         startTime = Time.time;
+        StarCount = 0;
     }
 
     void Update()
@@ -65,9 +71,13 @@ public class Happiness : MonoBehaviour
             {
                 happinessSlider.value = happinessSlider.maxValue;
                 isIncreasing = false;
-                SpawnStar();
-                Debug.Log("Star Drop!!!");
+                for (int i = 0; i < HowManyStar; i++)
+                {
+                    SpawnStar();
+                    Debug.Log(string.Format("{0} star drops!!!", HowManyStar)); // 별조각 몇개 떨어지는지 로그출력
+                }
                 Reset();
+                StarCount++;
             }
         }
     }
@@ -81,16 +91,26 @@ public class Happiness : MonoBehaviour
 
     void SpawnStar()
     {
-        // Maku 위치에서 조금 위의 위치에서 Star 인스턴스를 생성
-        Vector3 spawnPosition = transform.position + new Vector3(0, 1f, 0); // Y축 방향으로 1만큼 올린 위치
+        // Y축을 제외한 X, Z 좌표를 0.5 반경 내에서 랜덤으로 설정
+        float randomX = Random.Range(-0.3f, 0.3f); // -0.5 ~ 0.5 사이의 랜덤 값
+        float randomZ = Random.Range(-0.3f, 0.3f); // -0.5 ~ 0.5 사이의 랜덤 값
+
+        // Maku 위치에서 Y축은 1만큼 위, X와 Z는 랜덤으로 더한 위치에 Star 인스턴스 생성
+        Vector3 spawnPosition = transform.position + new Vector3(randomX, 1f, randomZ);
         GameObject spawnedStar = Instantiate(starPrefab, spawnPosition, Quaternion.identity);
 
         Rigidbody rb = spawnedStar.GetComponent<Rigidbody>();
         if (rb != null)
         {
-            rb.velocity = new Vector3(0, 5f, 0); // Y축 방향으로의 초기 속도 설정
+            // Y축은 위로 상승하면서 X, Z축은 포물선을 그리도록 속도를 적용
+            float upwardVelocity = Random.Range(3f, 6f); // Y축 속도를 랜덤으로 설정하여 다양성 부여
+            float horizontalVelocityX = Random.Range(-1f, 1f); // X축 방향 랜덤 속도
+            float horizontalVelocityZ = Random.Range(-1f, 1f); // Z축 방향 랜덤 속도
+
+            rb.velocity = new Vector3(horizontalVelocityX, upwardVelocity, horizontalVelocityZ); // 포물선 형태의 초기 속도
         }
     }
+
 
     void Stand_Here()
     {
